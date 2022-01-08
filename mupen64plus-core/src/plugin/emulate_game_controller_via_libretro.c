@@ -74,7 +74,7 @@ static get_keys_t getKeys = inputGetKeys_default;
 static void setup_control_variables(void)
 {
    struct retro_variable variables[] = {
-#if 0 // never specialize 
+#if 0 // never specializing 
       { "parallel-n64-alt-map",
         "Independent C-button Controls; disabled|enabled" },
 #endif
@@ -86,7 +86,7 @@ static void setup_control_variables(void)
 
 void update_control_variables(bool startup)
 {
-#if 0 // never specialize 
+#if 0 // never specializing 
    struct retro_variable var;
 
    var.key = "parallel-n64-alt-map";
@@ -106,7 +106,7 @@ void update_control_variables(bool startup)
 
 static void inputGetKeys_default_descriptor(void)
 {
-#if 0 // never specialize 
+#if 0 // never specializing 
    if (alternate_mapping)
 #endif
 	{
@@ -139,7 +139,7 @@ static void inputGetKeys_default_descriptor(void)
 
       environ_cb(RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS, desc);
    }
-#if 0 // never specialize 
+#if 0 // never specializing 
    else{
       #define standard_map(PAD) { PAD, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B,     "A Button (C-Down)" },\
          { PAD, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y,     "B Button (C-Left)" },\
@@ -649,7 +649,7 @@ static void inputGetKeys_default( int Control, BUTTONS *Keys )
       return;
    }
 
-#if 0 // never specialize 
+#if 0 // never specializing 
    if (alternate_mapping)
 #endif
    {
@@ -663,7 +663,7 @@ static void inputGetKeys_default( int Control, BUTTONS *Keys )
       Keys->Z_TRIG = input_cb(Control, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2);
       Keys->L_TRIG = input_cb(Control, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L);
    }
-#if 0 // never specialize 
+#if 0 // never specializing 
    else
    {
       Keys->R_TRIG = input_cb(Control, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R);
@@ -701,7 +701,7 @@ static void inputGetKeys_default( int Control, BUTTONS *Keys )
 
 void inputInitiateCallback(const char *headername)
 {
-#if 0 // never specialize
+#if 0 // never specializing
    struct retro_message msg;
    char msg_local[256];
 
