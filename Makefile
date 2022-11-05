@@ -352,7 +352,8 @@ else ifneq (,$(findstring osx,$(platform)))
 	CFLAGS += -DDONT_WANT_ARM_OPTIMIZATIONS
 	HAVE_OPENGL=0
    else
-        GL_LIB := -framework OpenGL
+   # OpenGL is broken on non-ARM now, too
+   HAVE_OPENGL=0
    endif
 
    # Target Dynarec
@@ -386,7 +387,7 @@ else ifneq (,$(findstring ios,$(platform)))
 
    TARGET := $(TARGET_NAME)_libretro_ios.dylib
    DEFINES += -DIOS
-   GLES = 1
+   HAVE_OPENGL=0
    WITH_DYNAREC=
    PLATFORM_EXT := unix
    MINVERSION :=
@@ -398,12 +399,10 @@ else ifneq (,$(findstring ios,$(platform)))
    LDFLAGS += -dynamiclib
 
    fpic = -fPIC
-   GL_LIB := -framework OpenGLES
    ifeq ($(platform),ios-arm64)
       CC = clang -arch arm64 -isysroot $(IOSSDK)
       CXX = clang++ -arch arm64 -isysroot $(IOSSDK)
       CFLAGS += -DDONT_WANT_ARM_OPTIMIZATIONS
-      FORCE_GLES=1
       CXXFLAGS += -Wc++11-extensions -std=c++11 -stdlib=libc++ -Wc++11-long-long
       CPUFLAGS += -marm -mfpu=neon -mfloat-abi=softfp
       HAVE_NEON=0
@@ -428,7 +427,6 @@ else ifeq ($(platform), tvos-arm64)
 
    TARGET := $(TARGET_NAME)_libretro_tvos.dylib
    DEFINES += -DIOS
-   GLES = 1
    WITH_DYNAREC=
    PLATFORM_EXT := unix
    MINVERSION :=
@@ -440,7 +438,7 @@ else ifeq ($(platform), tvos-arm64)
    LDFLAGS += -dynamiclib
 
    fpic = -fPIC
-   GL_LIB := -framework OpenGLES
+   HAVE_OPENGL=0
       CC = cc -arch arm64 -isysroot $(IOSSDK)
       CXX = c++ -arch arm64 -isysroot $(IOSSDK)
       CFLAGS += -DDONT_WANT_ARM_OPTIMIZATIONS
@@ -463,7 +461,7 @@ else ifneq (,$(findstring theos_ios,$(platform)))
 
    LIBRARY_NAME = $(TARGET_NAME)_libretro_ios
    DEFINES += -DIOS
-   GLES = 1
+   HAVE_OPENGL=0
    WITH_DYNAREC=arm
 
    PLATCFLAGS += -DHAVE_POSIX_MEMALIGN -DNO_ASM
