@@ -137,7 +137,10 @@ uint32_t send_allist_to_hle_rsp     = 0;
 unsigned int BUFFERSWAP             = 0;
 unsigned int FAKE_SDL_TICKS         = 0;
 
-bool alternate_mapping;
+#define BTNMAP_DEFAULT 0
+#define BTNMAP_ANALOG  1
+#define BTNMAP_DUAL    2
+char btnmap_selected=0;
 
 static bool initializing            = true;
 
@@ -453,8 +456,8 @@ static void setup_variables(void)
       { "parallel-n64-framerate",
          "Framerate (restart); original|fullspeed" },
 
-      { "parallel-n64-alt-map",
-        "Independent C-button Controls; disabled|enabled" },
+      { "parallel-n64-controller",
+        "Controller Type; default|analog|dual" },
 
 #if defined(HAVE_PARALLEL) || !defined(HAVE_OPENGL) || !defined(HAVE_OPENGLES)
       { "parallel-n64-vcache-vbo",
@@ -1548,15 +1551,17 @@ void update_variables(bool startup)
          frame_dupe = true;
    }
 
-   var.key = "parallel-n64-alt-map";
+   var.key = "parallel-n64-controller";
    var.value = NULL;
 
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value && startup)
    {
-      if (!strcmp(var.value, "disabled"))
-         alternate_mapping = false;
-      else if (!strcmp(var.value, "enabled"))
-         alternate_mapping = true;
+      if (!strcmp(var.value, "dual"))
+         btnmap_selected = BTNMAP_DUAL;
+      else if (!strcmp(var.value, "analog"))
+         btnmap_selected = BTNMAP_ANALOG;
+      else
+         btnmap_selected = BTNMAP_DEFAULT;
    }
 
 
